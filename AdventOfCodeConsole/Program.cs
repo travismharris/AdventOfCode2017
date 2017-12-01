@@ -61,13 +61,6 @@ namespace AdventOfCodeConsole
                     var num2 = Int16.Parse(puzzle[i + offset].ToString());
                     runningTotal += AddToTotal(num1, num2);
                 }
-                //else
-                //{
-                //    var num1 = Int16.Parse(puzzle[i].ToString());
-                //    var secondIndex = Math.Abs(offset - (i + 1));
-                //    var num2 = Int16.Parse(puzzle[secondIndex].ToString());
-                //    runningTotal += AddToTotal(num1, num2);
-                //}
             }
             return runningTotal*2;
         }
