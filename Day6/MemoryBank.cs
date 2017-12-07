@@ -10,7 +10,6 @@ namespace Day6
     {
         private int[] banks;
         private List<string> history = new List<string>();
-        
 
         public MemoryBank(int[] array)
         {
@@ -18,35 +17,38 @@ namespace Day6
             history.Add(this.ToString());
         }
 
-        
-
         public void BalanceMemory()
         {
-            var num = 1;
             var done = false;
             var hops = 0;
-            var max = banks.Max();
-            int indexOfFirstMax = GetIndexOfFirstMax(max);
+            //var max = banks.Max();
+            //int indexOfFirstMax = GetIndexOfFirstMax(max);
+            int occurence1 = 0;
+            int occurence2 = 0;
 
             while (!done)
             {
+
+                var max = banks.Max();
+                var indexOfFirstMax = GetIndexOfFirstMax(max);
+                hops++;
                 Redistribute(max, indexOfFirstMax);
                 var newHistoryEntry = this.ToString();
-                if (newHistoryEntry == "0 14 13 12 11 10 8 8 6 6 5 3 3 2 1 10 ")
-                    Console.WriteLine("Occurrence at " + (hops+1) + " hops.");
+
+                if (newHistoryEntry == "0 14 13 12 11 10 8 8 6 6 5 3 3 2 1 10 " && !history.Contains(newHistoryEntry))
+                {
+                    Console.WriteLine("First occurrence of offending value,\t" + this + ", at " + (hops) + " hops.");
+                    occurence1 = hops;
+                }
                 if (history.Contains(newHistoryEntry))
                 {
-                    Console.WriteLine("It took " + (hops + 1) + "hops.");
-
+                    Console.WriteLine("Reoccurence of offending value,\t\t" + this + ", at " + (hops) + " hops.");
+                    occurence2 = hops;
                     done = true;
+                    Console.WriteLine("There were " + (occurence2 - occurence1) + " iterations between occurences.");
                 }
+
                 history.Add(newHistoryEntry);
-                
-                hops++;
-                //Console.WriteLine(newHistoryEntry + " " + hops + " hops");
-                
-                max = banks.Max();
-                indexOfFirstMax = GetIndexOfFirstMax(max);
             }
             
         }
@@ -70,8 +72,7 @@ namespace Day6
             var numberToDistribute = max;
             banks[index] = 0;
             while (max > 0)
-            {
-                
+            {                
                 if (index == 15)
                     index = 0;
                 else
@@ -79,7 +80,7 @@ namespace Day6
 
                 banks[index] = banks[index] + 1;
                 
-                max -= 1;
+                max--;
             }
         }
 
