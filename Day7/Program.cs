@@ -13,20 +13,23 @@ namespace Day7
             //var rawTowerStringList = LoadPuzzle(@"..\Input\Day7Input.txt");
             var rawTowerStringList = LoadPuzzle(@"..\Input\TestInput.txt");
 
-            Console.Write("There are " + rawTowerStringList.Count + " towers in the List");
-            var towers = new List<Tower>();
-            foreach(var a in rawTowerStringList)
+            var towers = new Towers(rawTowerStringList);
+
+            for (int i = 0; i < towers.TowersList.Count; i++)
             {
-                towers.Add(new Tower(a));
+                if (towers.TowersList[i].IsSupporting)
+                    towers.AddSupportedTowers(towers.TowersList[i]);
             }
 
-
-            bool noChanges = false;
-
-            while (!noChanges)
+            for(int i = towers.TowersList.Count-1; i >= 0; i--)
             {
-
+                if (towers.TowersList[i].Remove)
+                {
+                    towers.TowersList.RemoveAt(i);
+                }
             }
+
+            Console.WriteLine("The program at the bottom is " + towers.TowersList[0].Name);
 
             Console.Write("\n\nPress any key to exit");
             Console.ReadKey();
@@ -44,5 +47,7 @@ namespace Day7
             return towers;
         }
 
+        
+        
     }
 }
